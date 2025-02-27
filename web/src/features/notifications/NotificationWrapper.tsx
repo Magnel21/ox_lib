@@ -7,34 +7,57 @@ import tinycolor from 'tinycolor2';
 import type { NotificationProps } from '../../typings';
 import MarkdownComponents from '../../config/MarkdownComponents';
 import LibIcon from '../../components/LibIcon';
+import { describe } from 'node:test';
 
 const useStyles = createStyles((theme) => ({
   container: {
     width: 300,
-    height: 'fit-content',
-    backgroundColor: theme.colors.dark[6],
+    height: 65,
+    background: theme.colors.basicBg[1],
     color: theme.colors.dark[0],
-    padding: 12,
-    borderRadius: theme.radius.sm,
-    fontFamily: 'Roboto',
-    boxShadow: theme.shadows.sm,
+    fontFamily: 'Helvetica',
+    borderRadius: 3,
+    display: 'flex',
+    alignItems: 'left',
+    // border: '1px solid #19212E', // Poprawiona składnia
   },
+
+  iconWrapper: {
+    marginTop: 0,
+    marginLeft: 0,
+    height: 65,
+    width: 65,
+    background: theme.colors.darkerBg[0],
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    fontSize: 28,
+  },
+
   title: {
-    fontWeight: 500,
+    fontWeight: 600,
     lineHeight: 'normal',
+    fontFamily: 'Helvetica',
   },
+
   description: {
+    fontWeight: 400,
+    lineHeight: 'normal',
+    fontFamily: 'Helvetica',
+    paddingTop: 3,
     fontSize: 12,
-    color: theme.colors.dark[2],
-    fontFamily: 'Roboto',
-    lineHeight: 'normal',
+    opacity: 0.6,
   },
-  descriptionOnly: {
-    fontSize: 14,
-    color: theme.colors.dark[2],
-    fontFamily: 'Roboto',
-    lineHeight: 'normal',
+
+  textWrapper: {
+    marginLeft: 10,
+    marginTop: 'auto',
+    marginBottom: 'auto',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
   },
+  
 }));
 
 const createAnimation = (from: string, to: string, visible: boolean) => keyframes({
@@ -84,10 +107,10 @@ const Notifications: React.FC = () => {
     if (!data.title && !data.description) return;
 
     const toastId = data.id?.toString();
-    const duration = data.duration || 3000;
+    const duration = data.duration || 30000;
 
     let iconColor: string;
-    let position = data.position || 'top-right';
+    let position = data.position || 'top-center';
 
     data.showDuration = data.showDuration !== undefined ? data.showDuration : true;
 
@@ -139,80 +162,32 @@ const Notifications: React.FC = () => {
       iconColor = tinycolor(data.iconColor).toRgbString();
     }
     
-    toast.custom(
-      (t) => (
-        <Box
-          sx={{
-            animation: getAnimation(t.visible, position),
-            ...data.style,
-          }}
-          className={`${classes.container}`}
-        >
-          <Group noWrap spacing={12}>
-            {data.icon && (
-              <>
-                {data.showDuration ? (
-                  <RingProgress
-                    key={toastKey}
-                    size={38}
-                    thickness={2}
-                    sections={[{ value: 100, color: iconColor }]}
-                    style={{ alignSelf: !data.alignIcon || data.alignIcon === 'center' ? 'center' : 'start' }}
-                    styles={{
-                      root: {
-                        '> svg > circle:nth-of-type(2)': {
-                          animation: `${durationCircle} linear forwards reverse`,
-                          animationDuration: `${duration}ms`,
-                        },
-                        margin: -3,
-                      },
-                    }}
-                    label={
-                      <Center>
-                        <ThemeIcon
-                          color={iconColor}
-                          radius="xl"
-                          size={32}
-                          variant={tinycolor(iconColor).getAlpha() < 0 ? undefined : 'light'}
-                        >
-                          <LibIcon icon={data.icon} fixedWidth color={iconColor} animation={data.iconAnimation} />
-                        </ThemeIcon>
-                      </Center>
-                    }
-                  />
-                ) : (
-                  <ThemeIcon
-                    color={iconColor}
-                    radius="xl"
-                    size={32}
-                    variant={tinycolor(iconColor).getAlpha() < 0 ? undefined : 'light'}
-                    style={{ alignSelf: !data.alignIcon || data.alignIcon === 'center' ? 'center' : 'start' }}
-                  >
-                    <LibIcon icon={data.icon} fixedWidth color={iconColor} animation={data.iconAnimation} />
-                  </ThemeIcon>
-                )}
-              </>
-            )}
-            <Stack spacing={0}>
-              {data.title && <Text className={classes.title}>{data.title}</Text>}
-              {data.description && (
-                <ReactMarkdown
-                  components={MarkdownComponents}
-                  className={`${!data.title ? classes.descriptionOnly : classes.description} description`}
-                >
-                  {data.description}
-                </ReactMarkdown>
-              )}
-            </Stack>
-          </Group>
-        </Box>
-      ),
-      {
-        id: toastId,
-        duration: duration,
-        position: position,
-      }
-    );
+    toast.custom((t) => (
+      <div className={`${classes.container}`}>
+        {/* Weather Icon */}
+        <div className={`${classes.iconWrapper}`}>
+          {data.icon && (
+            <ThemeIcon
+              color={iconColor}
+              radius="xl"
+              size={22}
+              variant={tinycolor(iconColor).getAlpha() < 0 ? undefined : 'light'}
+            >
+              <LibIcon icon={data.icon} fixedWidth color={iconColor} animation={data.iconAnimation} />
+            </ThemeIcon>
+
+          )}
+        </div>
+        
+        <div className={`${classes.textWrapper}`}>
+          <p className={`${classes.title}`}>{data.title} </p>
+          <p className={`${classes.description}`}>{data.description} </p>
+        </div>
+    
+        {/* Auto-dismiss after 14s */}
+        <div className="absolute bottom-0 left-0 h-1 bg-yellow-500 animate-progress"></div>
+      </div>
+    ), { duration: 14000 });
   });
 
   return <Toaster />;
