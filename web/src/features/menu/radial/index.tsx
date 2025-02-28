@@ -36,7 +36,7 @@ const useStyles = createStyles((theme) => ({
     fill: theme.colors.dark[6],
   },
   centerCircle: {
-    fill: theme.fn.primaryColor(),
+    fill: '#CD2E36',
     color: '#fff',
     stroke: theme.colors.dark[6],
     strokeWidth: 4,
@@ -154,13 +154,13 @@ const RadialMenu: React.FC = () => {
           >
             {/* Fixed issues with background circle extending the circle when there's less than 3 items */}
             <g transform="translate(175, 175)">
-              <circle r={175} className={classes.backgroundCircle} />
+              <circle r={225} className={classes.backgroundCircle} />
             </g>
             {menuItems.map((item, index) => {
               const pieAngle = 360 / (menuItems.length < 3 ? 3 : menuItems.length);
               const angle = degToRad(pieAngle / 2 + 90);
               const gap = 1;
-              const radius = 175 * 0.65 - gap;
+              const radius = 225 * 0.65 - gap;
               const sinAngle = Math.sin(angle);
               const cosAngle = Math.cos(angle);
               const iconYOffset = splitTextIntoLines(item.label, 15).length > 3 ? 3 : 0;
@@ -182,9 +182,9 @@ const RadialMenu: React.FC = () => {
                   }}
                 >
                   <path
-                    d={`M175.01,175.01 l${175 - gap},0 A175.01,175.01 0 0,0 ${
-                      175 + (175 - gap) * Math.cos(-degToRad(pieAngle))
-                    }, ${175 + (175 - gap) * Math.sin(-degToRad(pieAngle))} z`}
+                    d={`M225.01,175.01 l${175 - gap},0 A225.01,225.01 0 0,0 ${
+                      225 + (225 - gap) * Math.cos(-degToRad(pieAngle))
+                    }, ${225 + (225 - gap) * Math.sin(-degToRad(pieAngle))} z`}
                   />
                   <g transform={`rotate(${index * pieAngle - 90} ${iconX} ${iconY})`} pointerEvents="none">
                     {typeof item.icon === 'string' && isIconUrl(item.icon) ? (
@@ -246,7 +246,7 @@ const RadialMenu: React.FC = () => {
               fixedWidth
               className={classes.centerIcon}
               color="#fff"
-              size="2x"
+              size="1x"
             />
           </div>
         </ScaleFade>
