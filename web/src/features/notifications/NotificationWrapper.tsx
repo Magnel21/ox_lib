@@ -27,6 +27,7 @@ const useStyles = createStyles((theme) => ({
     marginLeft: 0,
     height: 65,
     width: 65,
+    borderRadius: '3px 0px 0px 3px',
     background: theme.colors.darkerBg[0],
     justifyContent: 'center',
     alignItems: 'center',
@@ -56,6 +57,15 @@ const useStyles = createStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
+  },
+
+  progress: {
+    marginTop: 61,
+    marginLeft: 0,
+    marginRight: 'auto',
+    position: 'absolute',
+    height: 4,
+    borderRadius: 4,
   },
   
 }));
@@ -146,16 +156,16 @@ const Notifications: React.FC = () => {
     if (!data.iconColor) {
       switch (data.type) {
         case 'error':
-          iconColor = 'red.6';
+          iconColor = '#ff4d4d'; // Zamiana "red.6" na HEX
           break;
         case 'success':
-          iconColor = 'teal.6';
+          iconColor = '#20c997'; // Zamiana "teal.6" na HEX
           break;
         case 'warning':
-          iconColor = 'yellow.6';
+          iconColor = '#ffc107'; // Zamiana "yellow.6" na HEX
           break;
         default:
-          iconColor = 'blue.6';
+          iconColor = '#007bff'; // Zamiana "blue.6" na HEX
           break;
       }
     } else {
@@ -185,9 +195,21 @@ const Notifications: React.FC = () => {
         </div>
     
         {/* Auto-dismiss after 14s */}
-        <div className="absolute bottom-0 left-0 h-1 bg-yellow-500 animate-progress"></div>
+        <Box
+          className={classes.progress}
+          sx={{
+            background: iconColor, // Przeniesione z `style`
+            "@keyframes width-decrease": {
+              "0%": { width: "300px" },
+              "100%": { width: "65px" },
+            },
+            animation: `width-decrease ${duration}ms linear forwards`,
+          }}
+        ></Box>
+
+
       </div>
-    ), { duration: 14000 });
+    ), { duration: duration });
   });
 
   return <Toaster />;

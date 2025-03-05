@@ -1,9 +1,10 @@
 import React from 'react';
-import { Box, createStyles, Text } from '@mantine/core';
+import { Box, createStyles, Text, ThemeIcon } from '@mantine/core';
 import { useNuiEvent } from '../../hooks/useNuiEvent';
 import { fetchNui } from '../../utils/fetchNui';
 import ScaleFade from '../../transitions/ScaleFade';
 import type { ProgressbarProps } from '../../typings';
+import LibIcon from '../../components/LibIcon';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -75,6 +76,9 @@ const useStyles = createStyles((theme) => ({
     height: 25,
     background: '#0D1117',
     borderRadius: 2,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   percentWrapper: {
@@ -131,7 +135,16 @@ const Progressbar: React.FC = () => {
 
             <Box className={classes.firstRow}>
               <Box className={classes.imageWrapper}>
+              <ThemeIcon
+                radius="xl"
+                size={15}
+                sx={{ backgroundColor: "transparent" }} // Zamiast opacity={0.0}
+              >
+                <LibIcon icon='spinner' fixedWidth color={'#CD2E36'} spin />
+              </ThemeIcon>
 
+
+          
               </Box>
               <Box className={classes.labelWrapper}>
                 <Text className={classes.label}>{label}</Text>
