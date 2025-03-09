@@ -32,7 +32,7 @@ const useStyles = createStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     display: 'flex',
-    fontSize: 28,
+    fontSize: 24,
   },
 
   title: {
@@ -139,14 +139,17 @@ const Notifications: React.FC = () => {
     if (!data.icon) {
       switch (data.type) {
         case 'error':
-          data.icon = 'circle-xmark';
+          data.icon = 'triangle-exclamation';
           break;
         case 'success':
           data.icon = 'circle-check';
           break;
         case 'warning':
-          data.icon = 'circle-exclamation';
+          data.icon = 'triangle-exclamation';
           break;
+        case 'money':
+          data.icon = 'sack-dollar';
+          break
         default:
           data.icon = 'circle-info';
           break;
@@ -156,16 +159,19 @@ const Notifications: React.FC = () => {
     if (!data.iconColor) {
       switch (data.type) {
         case 'error':
-          iconColor = '#ff4d4d'; // Zamiana "red.6" na HEX
+          iconColor = '#CD2E36'; // Zamiana "red.6" na HEX
           break;
         case 'success':
-          iconColor = '#20c997'; // Zamiana "teal.6" na HEX
+          iconColor = '#2ACB70'; // Zamiana "teal.6" na HEX
           break;
         case 'warning':
-          iconColor = '#ffc107'; // Zamiana "yellow.6" na HEX
+          iconColor = '#E4BA12'; // Zamiana "yellow.6" na HEX
+          break;
+        case 'money':
+          iconColor = '#2ACB70'; // Zamiana "teal.6" na HEX
           break;
         default:
-          iconColor = '#007bff'; // Zamiana "blue.6" na HEX
+          iconColor = '#1C5ADF'; // Zamiana "blue.6" na HEX
           break;
       }
     } else {

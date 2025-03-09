@@ -7,8 +7,11 @@ export const theme: MantineThemeOverride = {
   colors: {
     basicBg: ['radial-gradient(circle, #19212E, #141B25)',
       'radial-gradient(circle, #0A0C11, #141B25)',
+      '#0A0C11',
+      '#222D3D',
     ],
     darkerBg: ['#19212E'],
+    mainColor: ['#CD2E36'],
   },
   components: {
     Button: {
