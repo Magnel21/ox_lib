@@ -115,7 +115,6 @@ const Progressbar: React.FC = () => {
     setDuration(data.duration); 
     setValue(0);
 
-    data.duration -= 425;
     const onePercent = data.duration * 0.01;
     const updateProgress = setInterval(() => {
       setValue((previousValue) => {
