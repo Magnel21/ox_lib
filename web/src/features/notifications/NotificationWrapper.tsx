@@ -184,7 +184,7 @@ const Notifications: React.FC = () => {
         <div className={`${classes.iconWrapper}`}>
           {data.icon && (
             <ThemeIcon
-              color={iconColor}
+              color={ '#141B25'}
               radius="xl"
               size={22}
               variant={tinycolor(iconColor).getAlpha() < 0 ? undefined : 'light'}
