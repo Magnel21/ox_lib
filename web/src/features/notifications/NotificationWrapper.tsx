@@ -117,7 +117,7 @@ const Notifications: React.FC = () => {
     if (!data.title && !data.description) return;
 
     const toastId = data.id?.toString();
-    const duration = data.duration || 30000;
+    const duration = data.duration || 6000;
 
     let iconColor: string;
     let position = data.position || 'top-center';
